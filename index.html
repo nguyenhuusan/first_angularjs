@@ -1,12 +1,55 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="myApp">
 <head>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/myApp.css" rel="stylesheet">
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="js/myApp.js"></script>
 </head>
 <body>
-<div>
-    <p><input type="text" ng-model="yourName"></p>
-    <p>Hello {{yourName}}!</p>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<form name="myForm" novalidate>
+<div class="container" ng-controller="myController">
+    <h2>Products Management</h2>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Category</th>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in products">
+            <td><p class="text-center"><input type="checkbox" ng-model="item.checked"></p></td>
+            <td>{{item.category}}</td>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+        </tr>
+        <tr>
+            <td><p class="text-center"><button ng-click="onAdd()">Add</button></p></td>
+            <td><select name="category" ng-model="category" ng-required="true">
+                    <option value="Mobile">Mobile</option>
+                    <option value="Headphone">Headphone</option>
+                    <option value="Home Audio">Home Audio</option>
+                </select>
+                <div ng-show="submitted && myForm.category.$error.required">Required!</div>
+            <td><input type="text" name="id" ng-model="id" ng-required="true" ng-minlength=4 ng-maxlength=4>
+                <div ng-show="submitted && myForm.id.$error.required">Required!</div>
+                <div ng-show="submitted && myForm.id.$error.minlength">Too short!</div>
+                <div ng-show="submitted && myForm.id.$error.maxlength">Too long!</div></td>
+            <td><input type="text" name="name" ng-model="name" ng-required="true" ng-minlength=4 ng-maxlength=20>
+                <div ng-show="submitted && myForm.name.$error.required">Required!</div>
+                <div ng-show="submitted && myForm.name.$error.minlength">Too short!</div>
+                <div ng-show="submitted && myForm.name.$error.maxlength">Too long!</div></td>
+        </tr>
+        </tbody>
+    </table>
+    <div><button ng-click="onDel()">Delete</button></div>
 </div>
+</form>
 </body>
 </html>
